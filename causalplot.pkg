@@ -1,0 +1,12 @@
+v 1
+d 'CAUSALPLOT': causalplot
+d 
+d Distribution-Date:   20190402
+d License: Do What The F*ck You Want To Public License
+d 
+F causalplot.ado
+F kplot1.ado
+f diap_omitida.stmd
+f diap_psm.stmd
+f diap_dd.stmd
+f diap_rd.stmd
