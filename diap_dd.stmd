@@ -1,0 +1,25 @@
+% Diseño de Diferencias e Diferencias (DifinDif)
+% Christian Poss, Universidad EAFIT
+% 7 November 2017
+ 
+# Agradecimientos
+
+Agradezco el trabajo realizado por Manuel Alejandro Rodriguez en la creacion del codigo.
+Así mismo se reconoce el trabajo del profesor Nick Huntington-Klein, pieza fundamental para crear esta presentación. 
+ 
+# Outcome Tratados & Controles
+
+![](correlation1.png){width="45%"}
+
+# Diferencias en Y explicadas por Grupo y Tiempo
+
+![](correlation2.png){width="45%"}
+
+# Manteniendo los promedios explicados por Grupo y Tiempo
+
+![](correlation3.png){width="45%"}
+
+# Realizando doble diferencia
+
+![](correlation4.png){width="45%"}
+
