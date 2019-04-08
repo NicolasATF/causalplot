@@ -34,35 +34,35 @@ qui {
  global ha2 = round(cor1[2,1],0.001)
   
  twoway (scatter y x if u == 0) ///
- (scatter y x if u == 1) (lfit y x) , name(a, replace) ///
+ (scatter y x if u == 1) (lfit y x) , ///
  graphregion(fcolor(white)) ytitle(Y) xtitle(X) ///
  legend(order(1 " u = 0" 2 "u = 1")) ///
  title("Datos en Bruto" "Correlacion de $h ")
  graph export correlation1.png,as(png) replace
 
  twoway (scatter y x if u == 0) ///
- (scatter y x if u == 1) , name(b, replace) xline($x0) xline($x1) ///
+ (scatter y x if u == 1) , xline($x0) xline($x1) ///
  graphregion(fcolor(white)) ytitle(Y) xtitle(X) ///
  legend(off)  ///
  title("Que diferencias en X" "son explicadas por U" )
  graph export correlation2.png,as(png) replace
 
  twoway (scatter y x2 if u == 0) ///
- (scatter y x2 if u == 1), name(c, replace)  ///
+ (scatter y x2 if u == 1),  ///
  graphregion(fcolor(white)) ytitle(Y) xtitle(X) ///
  legend(off)  ///
  title("Remover las diferencias" "en X explicadas por U") 
  graph export correlation3.png,as(png) replace
 
 twoway (scatter y x2 if u == 0) ///
-(scatter y x2 if u == 1), name(d, replace)  yline($y0) yline($y1)  ///
+(scatter y x2 if u == 1),  yline($y0) yline($y1)  ///
 graphregion(fcolor(white)) ytitle(Y) xtitle(X) ///
 legend(off) ///
 title("Que diferencias en Y" "son explicadas por U")
  graph export correlation4.png,as(png) replace
  
 twoway (scatter y2 x2 if u == 0) ///
-(scatter y2 x2 if u == 1)(lfit y2 x2)  , name(e, replace) ///
+(scatter y2 x2 if u == 1)(lfit y2 x2)  , ///
 graphregion(fcolor(white)) ytitle(Y) xtitle(X) legend(off) ///
 title("Remover las diferencias" "en Y explicadas por U" "Corr: $ha2")
  graph export correlation5.png,as(png) replace
@@ -81,7 +81,6 @@ if ("`tipo'" == "psm") {
   g x = 10 + rnormal(10,5)
 
   g y = 1.5*x + 0.5*w+ 5*u + 5 + rnormal(10,4)
-  g k = 0
   g m=.
   local con  " "
   local line " "
@@ -96,13 +95,13 @@ if ("`tipo'" == "psm") {
   }
 
  twoway (scatter y x if u == 1, msize(vsmall)) ///
- (scatter y x if u == 0, msize(vsmall)) , name(a, replace)  ///
+ (scatter y x if u == 0, msize(vsmall)) ,  ///
  graphregion(fcolor(white)) legend(order(1 "Tratado" 2 "Control")) ///
  title("Diseño Matching" "Datos en Bruto") ytitle(" ") xtitle(" ")
  graph export correlation1.png,as(png) replace
 
  twoway (scatter y x if u == 1, msize(vsmall)) ///
- (scatter y x if u == 0, msize(vsmall)), `line' name(b, replace) ///
+ (scatter y x if u == 0, msize(vsmall)), `line' ///
   graphregion(fcolor(white))  legend(off) ///
   title("Obs similares" "En terminos de X") ytitle(" ") ///
   xtitle(" ")
@@ -116,7 +115,7 @@ egen  z = total(u + u2), by(m)
 
 twoway (scatter y x if u == 1, msize(vsmall)) ///
 (scatter y x if u == 0, msize(vsmall)), `line' ///
-name(c, replace) graphregion(fcolor(white)) ///
+ graphregion(fcolor(white)) ///
 legend(off)  ///
 title("Nos enfocamos en" "las Obs similares" "En un radio de `2'")
 graph export correlation3.png,as(png) replace
@@ -133,7 +132,7 @@ egen my = mean(y),by(u)
   
 twoway (scatter y x if u == 1, msize(vsmall)  yline(`m1' , lcolor(black))) ///
 (scatter y x if u == 0, msize(vsmall) yline(`m0' , lcolor(black))), graphregion(fcolor(white)) ///
- name(d, replace) legend(off)  ///
+ legend(off)  ///
  title("Mantemos `r(N)' Obs" "Comparables" "Calculamos E(y) Para" "cada grupo") ///
  ytitle(" ") xtitle(" ")
  graph export correlation4.png,as(png) replace
@@ -141,7 +140,7 @@ twoway (scatter y x if u == 1, msize(vsmall)  yline(`m1' , lcolor(black))) ///
  twoway   (line my x if u == 1, msize(vsmall) lcolor(navy)) ///
  (line my x if u == 0, msize(vsmall) lcolor(maroon)) ///
  , graphregion(fcolor(white)) ///
- name(e, replace)  legend(off) ///
+ legend(off) ///
  title("El ATE es" "E(Y|D=1) - E(Y|D=0)")
  graph export correlation5.png,as(png) replace
 
@@ -161,7 +160,7 @@ qui {
         replace d = 1 if t > 5
 
         g y = 3*u + 5*t^0.5+ d*2+ 5*u*d + rnormal(5,2)
-        g k = 0
+
         
         forvalues i = 0(1)1{
                 forvalues j = 0(1)1{
@@ -188,7 +187,7 @@ qui {
         global op6 lcolor(maroon) msize(vsmall)
 
         twoway (scatter y t if u == 0 , $op1 ) ///
-        (scatter y t if u == 1, $op2 ) , name(a, replace) ///
+        (scatter y t if u == 1, $op2 ) ,  ///
         graphregion(fcolor(white)) legend(off) xtitle("Tiempo") ///
         xline(5, lpattern(longdash)) ytitle("Resultado") ///
         title("Diseño DIFDIF" "Datos en Bruto")
@@ -200,7 +199,7 @@ qui {
         (line my t if u == 0 & d == 0 , $op5) ///
         (line my t if u == 0 & d == 1 , $op5) ///
         (line my t if u == 1 & d == 0, $op6) ///
-        (line my t if u == 1 & d == 1, $op6), name(b, replace)  ///
+        (line my t if u == 1 & d == 1, $op6),  ///
         graphregion(fcolor(white)) legend(off) xtitle("Tiempo") ///
         xline(5, lpattern(longdash)) ytitle("Resultado")  ///
         title("Variacion explicada" "por Grupos y Tiempo")
@@ -209,7 +208,7 @@ qui {
         twoway (line  my t if u == 0 & d == 0, $op5) ///
         (line  my t if u == 0 & d == 1, $op5) ///
         (line  my t if u == 1 & d == 0 , $op6 ) ///
-        (line  my t if u == 1 & d == 1 , $op6 ) , name(c, replace) ///
+        (line  my t if u == 1 & d == 1 , $op6 ) , ///
         graphregion(fcolor(white))   legend(off) xtitle("Tiempo") ///
         xline(5, lpattern(longdash)) ytitle("Resultado") ///
         title("Mantenemos los" "promedios" "en D y T")
@@ -218,7 +217,7 @@ qui {
         twoway (line  my2 t if u == 0 , $op3 ) ///
         (line  my2 t if u == 1 & d == 1, $op6 ) ///
         (line  my2 t if u == 1 & d == 0, $op6 ) , ///
-        graphregion(fcolor(white)) name(d, replace) ///
+        graphregion(fcolor(white))  ///
         legend(off) xtitle("Tiempo") ///
         xline(5, lpattern(longdash)) ytitle("Resultado") ///
         title("ATE" "Doble Diferencia")
@@ -251,13 +250,13 @@ if ("`tipo'" == "rd") {
 		 
         twoway (scatter y t , xline(5, lpattern(longdash)) msize(vsmall)) ///
         (scatter my t , xline(5, lpattern(longdash)) ///
-        msize(vsmall)) , name(b, replace) xtitle("Puntaje") ///
+        msize(vsmall)) ,  xtitle("Puntaje") ///
         ytitle("Resultado") graphregion(fcolor(white)) legend(off) ///
         title("Variacion Explicada por" "la variable Running")
          graph export correlation2.png,as(png) replace
 		 
         scatter my t , msize(vsmall) ///
-        xline(5, lpattern(longdash)) name(c, replace) ///
+        xline(5, lpattern(longdash)) ///
         msize(vsmall) mcolor(maroon) xtitle("Puntaje") ///
         ytitle("Resultado") graphregion(fcolor(white)) ///
         title("Nos quedamos" "la variacion" "explicada por R")
@@ -265,7 +264,7 @@ if ("`tipo'" == "rd") {
 		 
         twoway (scatter  my t if t < 5  & t > 5 - `2', msize(vsmall) ) ///
         (scatter my t if t > 5  & t < 5 + `2', msize(vsmall) ) ,  ///
-        xline(5, lpattern(longdash))  name(d, replace) ///
+        xline(5, lpattern(longdash))  ///
         xtitle("Puntaje")  ///
         ytitle("Resultado") graphregion(fcolor(white)) ///
         title("Efecto LATE" "Impacto Local") legend(off)

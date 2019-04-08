@@ -13,7 +13,7 @@ qui{
 
 kplot1 `obs' , tipo(omitida)
 
-markstat using diap_omitida.stmd,slides 
+markstat using diap_omitida.stmd,slides(santiago) 
 }
 }
 
@@ -22,7 +22,7 @@ qui{
 
 kplot1 `obs' `cal' , tipo(psm)
 
-markstat using diap_psm.stmd,slides 
+markstat using diap_psm.stmd,slides(santiago)
 }
 }
 
@@ -31,7 +31,7 @@ qui{
 
 kplot1 `obs' , tipo(dd)
 
-markstat using diap_dd.stmd,slides 
+markstat using diap_dd.stmd,slides(santiago)
 }
 }
 
@@ -40,7 +40,7 @@ qui{
 
 kplot1 `obs' `cal' , tipo(rd)
 
-markstat using diap_rd.stmd,slides 
+markstat using diap_rd.stmd,slides(santiago) 
 }
 }
 

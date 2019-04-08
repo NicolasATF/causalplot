@@ -1,11 +1,26 @@
 % Propensity Score Matching (PSM)
-% Christian Poss, Universidad EAFIT
-% 7 November 2017
+% Christian Posso, Universidad EAFIT
+% `s c(current_date)`
  
 # Agradecimientos
 
-Agradezco el trabajo realizado por Manuel Alejandro Rodriguez en la creacion del codigo.
-Así mismo se reconoce el trabajo del profesor Nick Huntington-Klein, pieza fundamental para crear esta presentación. 
+Esta presentación esta basa en el trabajo del profesor Nick Huntington-Klein llamado
+Causal Inference.
+
+Agradezco el trabajo desempeñado por Manuel Alejandro Rodriguez en la programación
+de este comando.
+
+# ¿Que hace este comando?
+
+Este comando pretende mostrar de manera amena como funcionan los diferentes metodos econometricos
+utilizados en el día a día de economistas para realizar inferencia causal de los datos. 
+
+En esta presentación veremos como trabaja el metodo de Propensity Score Matching (PSM).
+
+Este diseño se basa en el control de las diferencias _observables de los grupos de tratamiento a traves 
+del emparejamiento de controles y tratados con caracteristicas observadas similares.
+
+En esta diapositiva se expondra el metodo de emparejamiento Caliper. 
  
 # Tratados & Controles antes de emparejamiento
 

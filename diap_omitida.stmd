@@ -1,11 +1,26 @@
-% Relación entre Y y X controlando por una variable U
-% Christian Poss, Universidad EAFIT
-% 7 November 2017
+% Propensity Score Matching (PSM)
+% Christian Posso, Universidad EAFIT
+% `s c(current_date)`
  
 # Agradecimientos
 
-Agradezco el trabajo realizado por Manuel Alejandro Rodriguez en la creacion del codigo.
-Así mismo se reconoce el trabajo del profesor Nick Huntington-Klein, pieza fundamental para crear esta presentación. 
+Esta presentación esta basa en el trabajo del profesor Nick Huntington-Klein llamado
+Causal Inference.
+
+Agradezco el trabajo desempeñado por Manuel Alejandro Rodriguez en la programación
+de este comando.
+
+# ¿Que hace este comando?
+
+Este comando pretende mostrar de manera amena como funcionan los diferentes metodos econometricos
+utilizados en el día a día de economistas para realizar inferencia causal de los datos. 
+
+En esta presentación veremos como trabaja una regresion de OLS con multiples variables explicativas.
+
+En especifico, queremos ver como una variable X afecta la variable outcome controlando por una covariable
+U. 
+
+Para efectos de exposición se supone U una variable binaria.  
  
 # Correlación entre Y & X sin controlar por U
 
