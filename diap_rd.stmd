@@ -1,25 +1,21 @@
 % Diseño de Regresión Discontinua (RDD)
 % Christian Posso, Universidad EAFIT
-% `s c(current_date)`
  
 # Agradecimientos
 
-Esta presentación esta basa en el trabajo del profesor Nick Huntington-Klein llamado
-Causal Inference.
+* Esta presentación esta basa en el trabajo del profesor Nick Huntington-Klein llamado Causal Inference.
 
-Agradezco el trabajo desempeñado por Manuel Alejandro Rodriguez en la programación
-de este comando.
+* Agradezco el trabajo desempeñado por Manuel Alejandro Rodriguez en la programación de este comando.
 
-# ¿Que hace este comando?
+# ¿Qué hace este comando?
 
-Este comando pretende mostrar de manera amena como funcionan los diferentes metodos econometricos
-utilizados en el día a día de economistas para realizar inferencia causal de los datos. 
+* Este comando pretende mostrar de manera amena como funcionan los diferentes metodos econometricos utilizados en el día a día de economistas para realizar inferencia causal de los datos. 
 
-En esta presentación veremos como trabaja el Diseño de Regresión Discontinua (RDD por sus siglas en ingles).
+* En esta presentación veremos como trabaja el Diseño de Regresión Discontinua (RDD por sus siglas en ingles).
 
-Este diseño se basa en la asignación del tratamiento a traves de una variable (piense en un puntaje) y un punto de corte.
+* Este diseño se basa en la asignación del tratamiento a traves de una variable (piense en un puntaje) y un punto de corte.
 
-Esta asignación, aunque no perfecta siempre, se supone exogena.
+* Esta asignación, aunque no perfecta siempre, se supone exogena.
 
  
 # Outcome Tratados & Controles
