@@ -3,22 +3,19 @@
  
 # Agradecimientos
 
-Esta presentación esta basa en el trabajo del profesor Nick Huntington-Klein llamado
-Causal Inference.
+* Esta presentación esta basa en el trabajo del profesor Nick Huntington-Klein llamado Causal Inference.
 
-Agradezco el trabajo desempeñado por Manuel Alejandro Rodriguez en la programación
-de este comando.
+* Agradezco el trabajo desempeñado por Manuel Alejandro Rodriguez en la programación de este comando.
 
 # ¿Qué hace este comando?
 
-Este comando pretende mostrar de manera amena como funcionan los diferentes metodos econometricos
-utilizados en el día a día de economistas para realizar inferencia causal de los datos. 
+* Este comando pretende mostrar de manera amena como funcionan los diferentes metodos econometricos utilizados en el día a día de economistas para realizar inferencia causal de los datos. 
 
-En esta presentación veremos como trabaja el Diseño de Diferencias en Diferencias (Diff-Diff por sus siglas en ingles)
+* En esta presentación veremos como trabaja el Diseño de Diferencias en Diferencias (Diff-Diff por sus siglas en ingles)
 
-Este diseño se basa en la capacidad de observar a los grupos control y tratado un paso antes de ser asignados al tratamiento. 
+* Este diseño se basa en la capacidad de observar a los grupos control y tratado un paso antes de ser asignados al tratamiento. 
 
-Esto permite el control de caracteristicas no observadas constantes en el tiempo que afectan la decisión de ser tratado.
+* Esto permite el control de caracteristicas no observadas constantes en el tiempo que afectan la decisión de ser tratado.
  
 # Outcome Tratados & Controles
 
