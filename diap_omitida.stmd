@@ -3,23 +3,19 @@
  
 # Agradecimientos
 
-Esta presentación esta basa en el trabajo del profesor Nick Huntington-Klein llamado
-Causal Inference.
+* Esta presentación esta basa en el trabajo del profesor Nick Huntington-Klein llamado Causal Inference.
 
-Agradezco el trabajo desempeñado por Manuel Alejandro Rodriguez en la programación
-de este comando.
+* Agradezco el trabajo desempeñado por Manuel Alejandro Rodriguez en la programación de este comando.
 
 # ¿Qué hace este comando?
 
-Este comando pretende mostrar de manera amena como funcionan los diferentes metodos econometricos
-utilizados en el día a día de economistas para realizar inferencia causal de los datos. 
+* Este comando pretende mostrar de manera amena como funcionan los diferentes metodos econometricos utilizados en el día a día de economistas para realizar inferencia causal de los datos. 
 
-En esta presentación veremos como trabaja una regresion de OLS con multiples variables explicativas.
+* En esta presentación veremos como trabaja una regresion de OLS con multiples variables explicativas.
 
-En especifico, queremos ver como una variable X afecta la variable outcome controlando por una covariable
-U. 
+* En especifico, queremos ver como una variable X afecta la variable outcome controlando por una covariable U. 
 
-Para efectos de exposición se supone U una variable binaria.  
+* Para efectos de exposición se supone U una variable binaria.  
  
 # Correlación entre Y & X sin controlar por U
 
