@@ -115,12 +115,12 @@ program markstat1
         if "`format'" == "markdown" local keep2 md `keep2'
         mata: cleanup("`filename'", "`keep2'")
 end
-program _closeAllFiles
+program closeAllFiles
         forvalues i = 0(1)12 {
                 capture mata: fclose(`i')
         }
 end
-program _pandoc
+program pandoc
 * interface to Pandoc to convert Markdown to html, latex or docx
     syntax using/ [, format(string) theme(string) incremental BIBliography mathjax bundle]
         local filename `using'
