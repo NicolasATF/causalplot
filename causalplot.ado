@@ -6,7 +6,7 @@ if ("`link'"==""){
 error, link need it
 }
 else {
-local link "`link'"
+local l "`link'"
 cd `dir'
 
 local obs `1'
