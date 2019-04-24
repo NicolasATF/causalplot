@@ -7,8 +7,7 @@ version 14
 end
 
 program _markstat
-        syntax using/ [, pdf docx slides SLIDES2(string) beamer BEAMER2(string)
->  ///
+        syntax using/ [, pdf docx slides SLIDES2(string) beamer BEAMER2(string) ///
                          markdown mathjax bundle BIBliography strict ///
                                  noDO noR keep KEEP2(string) plain ]
 
@@ -27,12 +26,10 @@ program _markstat
         confirm file "`filename'.stmd"  
         
         // output format
-        local formats "`pdf' `slides'`slides2' `beamer'`beamer2' `docx' `markdo
-> wn'"
+        local formats "`pdf' `slides'`slides2' `beamer'`beamer2' `docx' `markdown'"
         local nformats : word count `formats'
         if `nformats' > 1 {
-                display as error "specify at most one of pdf, docx, slides, or 
-> beamer"
+                display as error "specify at most one of pdf, docx, slides, or beamer"
                 exit 198
         }
         local format html
@@ -46,8 +43,7 @@ program _markstat
                         if "``option'2'" != "" {
                                 if strpos("``option'2'", "+") > 0 {
                                         local incremental incremental
-                                        local `option'2 = strtrim(subinstr("``o
-> ption'2'", "+", "", .))
+                                        local `option'2 = strtrim(subinstr("``option'2'", "+", "", .))
                                 }
                                 if "``option'2'" != "" local theme ``option'2'
                         }
@@ -57,8 +53,7 @@ program _markstat
                 
         // syntax
         if "`strict'" == ""{
-                mata: st_local("strict", isStrict("`filename'") ? "strict" : ""
-> )
+                mata: st_local("strict", isStrict("`filename'") ? "strict" : "" )
         }       
         
         // tangle       
@@ -86,8 +81,7 @@ program _markstat
         }
         else {
                 if "`theme'" != "" local optionaltheme theme(`theme')   
-                local options format(`format') `optionaltheme' `incremental' `b
-> ibliography' `mathjax' `bundle' 
+                local options format(`format') `optionaltheme' `incremental' `bibliography' `mathjax' `bundle' 
                 di "{bf}Running Pandoc{sf}"
                 _pandoc using "`filename'", `options'
         }
@@ -108,8 +102,7 @@ program _markstat
                 whereis pdflatex
                 local cmd `""`r(pdflatex)'" "`file'.tex""' 
                 if "`folder'" != "" {
-                        mata st_local("folder", usubinstr("`folder'", "\", "/",
-> . ))
+                        mata st_local("folder", usubinstr("`folder'", "\", "/",. ))
                         local cmd `"`cmd' -output-directory="`folder'" "'
                 }
                 shell `cmd'
@@ -137,16 +130,14 @@ program _closeAllFiles
 end
 program _pandoc
 * interface to Pandoc to convert Markdown to html, latex or docx
-    syntax using/ [, format(string) theme(string) incremental BIBliography math
-> jax bundle]
+    syntax using/ [, format(string) theme(string) incremental BIBliography mathjax bundle]
         local filename `using'
         whereis pandoc `l'
         local pandoc = r(pandoc)
         if "`bibliography'" == "bibliography" {
                 local args --filter "pandoc-citeproc"
                 if c(os) == "MacOSX" { // include path in Mac (same as pandoc)
-                        local args = subinstr(`"`args'"', "pandoc", "`pandoc'",
->  .)
+                        local args = subinstr(`"`args'"', "pandoc", "`pandoc'", .)
                 }
         }
         // format and theme
@@ -157,8 +148,7 @@ program _pandoc
         if "`format'" == "s5" {         
             if "`theme'" == "" local theme default
                 mata: unzipS5() // ensure installed
-                mata: st_local("s5", getFolder(findFile("s5/`theme'/slides.css"
-> )))
+                mata: st_local("s5", getFolder(findFile("s5/`theme'/slides.css")))
                 confirm file "`s5'/slides.js"
                 local args `args' -V s5-url="`s5'"
         }
@@ -188,8 +178,7 @@ program _pandoc
         local outex pdx
         if "`format'" == "docx" local outex docx
         capture erase "`filename'.`outex'"
-        local cmd `""`pandoc'" "`filename'.md" `args' -s -o "`filename'.`outex'
-> ""'
+        local cmd `""`pandoc'" "`filename'.md" `args' -s -o "`filename'.`outex'""'
         shell `cmd'
         confirm file "`filename'.`outex'"
 end
@@ -212,10 +201,8 @@ mata:
 
 void tangle(string scalar filename, string scalar format, real scalar strict) {
  // split stmd file into md, do and R files with strict or relaxed syntax
-        real scalar fh, dofile, mdfile, chunk, echo, mata, tex, rfile, rchunk, 
-> codefile
-        string scalar mode, line, tag, closer, code, placeholder, match, prefix
-> , args, lang
+        real scalar fh, dofile, mdfile, chunk, echo, mata, tex, rfile, rchunk, codefile
+        string scalar mode, line, tag, closer, code, placeholder, match, prefix, args, lang
     tex = format == "latex" | format == "beamer"
         
         // open files
@@ -244,7 +231,6 @@ void tangle(string scalar filename, string scalar format, real scalar strict) {
                                 mata = lang == "m"
                                 // consolidate some?
                                 if(lang == "s" | lang == "m") {                
->               
                                         chunk++                         
                                         // placeholder (as in 1.6.1)
                                         tag = strofreal(chunk)
@@ -256,21 +242,18 @@ void tangle(string scalar filename, string scalar format, real scalar strict) {
                                         if(mata) tag = tag + "m"
                                         fput(dofile, "//_" + tag)
                                         if(mata) fput(dofile, "mata:")
-                                        if(!strict) fput(dofile, usubstr(line, 
-> 5, .))
+                                        if(!strict) fput(dofile, usubstr(line, 5, .))
                                 } 
                                 else { // R
                                         rchunk++
-                                        if(rchunk == 1) rfile = fopenwr(filenam
-> e + ".R")
+                                        if(rchunk == 1) rfile = fopenwr(filename + ".R")
                                         // placeholder (as in 1.6.1)
                                         tag = strofreal(rchunk)
                                         fput(mdfile, "")
                                         fput(mdfile, "{{r" + tag + "}}")
                                         fput(mdfile, "")
                                         // start block
-                                        if(echo == 0) tag = tag + "q"          
->                       
+                                        if(echo == 0) tag = tag + "q"              
                                         fput(rfile, "#_" + tag)
                                 }
                         }
@@ -278,60 +261,47 @@ void tangle(string scalar filename, string scalar format, real scalar strict) {
                         // verbatim or math block?
                         else if(startsBlock(line)) {
                                 mode = "block"
-                                closer = blockCloser(line)                     
->       
+                                closer = blockCloser(line)                       
                                 fput(mdfile, line)
                         }
                         
                         else {                  
                                 // stata/mata/r inline code?
-                                while(hasInlineCode(line, code = "", prefix = "
-> ")) {
+                                while(hasInlineCode(line, code = "", prefix = "")) {
                                         if(prefix == "s" | prefix == "m") {
                                                 chunk++
                                                 tag = strofreal(chunk)
                                                 fput(dofile, "//_" + tag)
                                                 // mata
                                                 if(prefix == "m") {
-                                                        if(startsWith(ustrtrim(
-> code), "%")) {
-                                                                args = `"""' + 
-> usubinstr(code, " ", `"", "', 1)
+                                                        if(startsWith(ustrtrim(code), "%")) {
+                                                                args = `"""' + usubinstr(code, " ", `"", "', 1)
                                                         }
                                                         else {
-                                                                args = `""%f", 
-> "' + code
+                                                                args = `""%f", "' + code
                                                         }
-                                                        fput(dofile, "mata: pri
-> ntf(" + args + ")")
+                                                        fput(dofile, "mata: printf(" + args + ")")
                                                 }
                                                 // stata
                                                 else {
-                                                        fput(dofile, "display "
->  + code)
+                                                        fput(dofile, "display " + code)
                                                 }
-                                                placeholder = "{{." + tag + "}}
-> "
+                                                placeholder = "{{." + tag + "}}"
                                         }
                                         else { // R
                                                 rchunk++
-                                                if(rchunk == 1) rfile = fopenwr
-> (filename + ".R")
+                                                if(rchunk == 1) rfile = fopenwr(filename + ".R")
                                                 tag = strofreal(rchunk)
                                                 fput(rfile, "#_" + tag)
                                                 fput(rfile, code)
-                                                placeholder = "{{r." + tag + "}
-> }"
+                                                placeholder = "{{r." + tag + "}}"
                                         }
                                         match = "`" + prefix + " " + code + "`"
->  
-                                        line = usubinstr(line, match, placehold
-> er, 1)                                        
+                                        line = usubinstr(line, match, placeholder, 1)                                        
                                 }
                                 // code extension/underline
                                 if(tex) tag2tex(line)
-                                else if (format == "docx") handleUnderline(line
-> )
+                                else if (format == "docx") handleUnderline(line)
                                 // markdown
                                 fput(mdfile, line)
                         }
@@ -342,7 +312,6 @@ void tangle(string scalar filename, string scalar format, real scalar strict) {
                         fput(mdfile, line)
                         if(endsBlock(line, closer)) {
                                 mode = "markdown"                              
->  
                         }
                 }
                 
@@ -394,8 +363,7 @@ real scalar startsStata(string scalar line, real scalar strict,
                 if (ustrregexm(next, "^\{(.+)\}$") > 0) next = ustrregexs(1)
                 slash = usubstr(next, ustrlen(next), 1) == "/"
                 if(slash) next = usubstr(next, 1, ustrlen(next) - 1)
-                match = ustrregexm(next,"^[smr]$") | next == "stata" | next == 
-> "mata"
+                match = ustrregexm(next,"^[smr]$") | next == "stata" | next == "mata"
                 if(!match) return(0)
                 if(slash) echo = 0
                 lang = usubstr(next, 1, 1)
@@ -431,8 +399,7 @@ real scalar endsBlock(string scalar line, string scalar closer) {
  // line starts with current block closer
         return(startsWith(line, closer))
 }
-real scalar hasInlineCode(string scalar line, string scalar match, string scala
-> r prefix) {
+real scalar hasInlineCode(string scalar line, string scalar match, string scalar prefix) {
  // non-greedy regex for inline code
         real scalar r, pos, ns, i
         real vector stack
@@ -554,8 +521,7 @@ void weave(string scalar filename, string scalar format, real scalar plain) {
 
         real scalar outfile, infile, n, tex, md
         real vector markers, rmarkers
-        string scalar outext, line, blockhold, inlinehold, logline, includefile
-> , w, prefix 
+        string scalar outext, line, blockhold, inlinehold, logline, includefile, w, prefix 
         string vector lines, rlines, words
  
         // output file
@@ -566,8 +532,7 @@ void weave(string scalar filename, string scalar format, real scalar plain) {
         
         // get translated smcl
         lines = translateLog(filename, format, plain)
-        markers = select(1::length(lines), ustrregexm(lines, "[.|:]\s+//_") :> 
-> 0)
+        markers = select(1::length(lines), ustrregexm(lines, "[.|:]\s+//_") :> 0)
         rlines = J(0, 1, "")
         
         // open Pandoc output 
@@ -601,27 +566,22 @@ void weave(string scalar filename, string scalar format, real scalar plain) {
                 if(ustrregexm(line, blockhold) > 0) {
                         n = strtoreal(ustrregexs(2))
                         if(ustrregexs(1) == "") { // stata
-                                renderLog(outfile, format, lines, markers[n], m
-> arkers[n + 1] - 1, "stata")
+                                renderLog(outfile, format, lines, markers[n], markers[n + 1] - 1, "stata")
                         }
                         else { // R
                                 if(length(rlines) < 1) {
                                         rlines = cat(filename + ".rout")
-                                        rmarkers = select(1::length(rlines), us
-> ubstr(rlines, 1, 4) :== "> #_")
+                                        rmarkers = select(1::length(rlines), usubstr(rlines, 1, 4) :== "> #_")
                                 }
-                                renderLog(outfile, format, rlines, rmarkers[n],
->  rmarkers[n + 1] - 1, "r")
+                                renderLog(outfile, format, rlines, rmarkers[n], rmarkers[n + 1] - 1, "r")
                         }
                 }
                 // handle includes
-                else if (ustrregexm(line,"<p>.include ([^<]+)</p>") > 0) {     
->               
+                else if (ustrregexm(line,"<p>.include ([^<]+)</p>") > 0) {                 
                         includefile = addSuffix(ustrregexs(1), outext)
                         printf(".include file %s\n", includefile)
                         if(!fileexists(includefile)) {
-                                errprintf("include file %s not found", includef
-> ile)
+                                errprintf("include file %s not found", includefile)
                                 exit(601)
                         }
                         fputvec(outfile, cat(includefile))
@@ -629,8 +589,7 @@ void weave(string scalar filename, string scalar format, real scalar plain) {
                 // resize LaTeX graphs  
                 else if (startsWith(line,"\includegraphics{")) {
                         w = format == "beamer" ? "0.60" : "0.75"
-                        line = usubinstr(line, "{", "[width=" + w + "\linewidth
-> ]{", 1)
+                        line = usubinstr(line, "{", "[width=" + w + "\linewidth]{", 1)
                         fput(outfile, line)
                 }
                 else {  
@@ -639,28 +598,22 @@ void weave(string scalar filename, string scalar format, real scalar plain) {
                                 prefix = ustrregexs(1)
                                 if(prefix == "r" & length(rlines) < 1) {
                                         rlines = cat(filename + ".rout")
-                                        rmarkers = select(1::length(rlines), us
-> ubstr(rlines, 1, 4) :== "> #_")
+                                        rmarkers = select(1::length(rlines), usubstr(rlines, 1, 4) :== "> #_")
                                 }
                                 n = strtoreal(ustrregexs(2))
-                                logline = prefix == "" ? lines[markers[n] + 2] 
-> : rlines[rmarkers[n + 1] - 1]
+                                logline = prefix == "" ? lines[markers[n] + 2] : rlines[rmarkers[n + 1] - 1]
                                 logline = ustrtrim(logline)
                                 if (prefix == "r") { 
                                         words = tokens(logline)
-                                        if(length(words) > 1) logline =  ustrtr
-> im(words[2])
+                                        if(length(words) > 1) logline =  ustrtrim(words[2])
                                 }                               
-                                if(!tex & !md) logline = htmlEncode(logline, 1,
->  1)
-                                line = usubinstr(line, ustrregexs(0), logline, 
-> 1)                            
+                                if(!tex & !md) logline = htmlEncode(logline, 1, 1)
+                                line = usubinstr(line, ustrregexs(0), logline, 1)                            
                         }                               
                         // write markdown
                         fput(outfile, line)                             
                         if(format == "html" && n == 0) { 
-                                if(ustrtrim(line) == "<head>") injectCss(outfil
-> e)
+                                if(ustrtrim(line) == "<head>") injectCss(outfile)
                         }
                 }
                 
@@ -668,8 +621,7 @@ void weave(string scalar filename, string scalar format, real scalar plain) {
         fclose(infile)
         fclose(outfile)
 }               
-string vector translateLog(string scalar filename, string scalar format, real s
-> calar plain) {
+string vector translateLog(string scalar filename, string scalar format, real scalar plain) {
  // process rules in smcl log, then translate to plain text or TeX
         real scalar changed, fh, i, tex
         string scalar infile, logfile, cmd, dashes, hrule, width
@@ -712,8 +664,7 @@ string vector translateLog(string scalar filename, string scalar format, real s
                         while(ustrregexm(lines[i], "(--[-]+)") > 0) {
                                 dashes = ustrregexs(1)
                                 hrule = ustrlen(dashes) * "─"  // 226, 148, 128
-                                lines[i] = usubinstr(lines[i], dashes, hrule, 1
-> )
+                                lines[i] = usubinstr(lines[i], dashes, hrule, 1)
                         }
                 }
         }
@@ -739,7 +690,6 @@ void drawRules(string vector lines) {
                                 if(ustrregexs(1) == c[k]) break
                         }
                         line = usubinstr(line, ustrregexs(0), d[k], .)         
->  
                 }
                 // hlines left for Stata
                 lines[i] = line
@@ -774,8 +724,7 @@ void removeCommands(string vector lines, real scalar bot, real scalar top,
                         if(iscmd) {                                     
                                 // mata rules in q
                                 if (lang == "stata" & j < top) {
-                                        if(isMataRules(lines[j\j+1]) ) lines[j 
-> + 1] = ""
+                                        if(isMataRules(lines[j\j+1]) ) lines[j + 1] = ""
                                 }
                                 lines[j] = ""
                         }
@@ -794,8 +743,7 @@ real scalar isMataRules(string vector lines) {
         return(cmd == ". mata" | cmd == ". mata:" | cmd == ": end")     
 }
 void renderLog(real scalar outfile, string scalar format, 
-    string vector lines, real scalar bot, real scalar top, string scalar lang) 
-> {     
+    string vector lines, real scalar bot, real scalar top, string scalar lang) {     
  // Trims log snippet and wraps in appropriate environment, 
  // consolidates old log2html and log2tex and handles R
  
@@ -831,8 +779,7 @@ void renderLog(real scalar outfile, string scalar format,
         // latex stlog
         else if (tex) {
                 if(!stata) texify(lines, bot, top)
-                if(usubstr(lines[bot], 1, 1) == " ") lines[bot] = "\" + lines[b
-> ot]
+                if(usubstr(lines[bot], 1, 1) == " ") lines[bot] = "\" + lines[bot]
                 beamer = format == "beamer"
                 if(beamer) fput(outfile, "{\fontsize{7}{8}\selectfont")
                 fput(outfile, "\begin{stlog}" + beamer * "[auto]")
@@ -846,8 +793,7 @@ void renderLog(real scalar outfile, string scalar format,
                 fput(outfile, "```")
         }       
 }
-void unify(string vector lines, real scalar bot, real scalar top, string scalar
->  ws) {
+void unify(string vector lines, real scalar bot, real scalar top, string scalar ws) {
  // unify multiple blank lines in output <>
         real scalar isws, inws, i, j    
         j = bot - 1
@@ -873,8 +819,7 @@ void injectCss(real scalar outfile) {
         fputvec(outfile, css)
         fput(outfile, "</style>")
 }
-string vector htmlEncode(string vector lines, real scalar bot, real scalar top)
->  {
+string vector htmlEncode(string vector lines, real scalar bot, real scalar top) {
  // encode & and < as entities
         real scalar j
         string vector encoded, fixamp
@@ -891,8 +836,7 @@ void texify(string vector lines, real scalar bot, real scalar top) {
         string scalar line
         real scalar i, j
         escape = "\", "#", "&", "{", "}", "^", "~", "{\lbr."
-        code   = "\\","\#", "\&", "{\lbr.","{\rbr}","{\caret}","{\tytilde}", "{
-> \lbr}"
+        code   = "\\","\#", "\&", "{\lbr.","{\rbr}","{\caret}","{\tytilde}", "{\lbr}"
         for(i = bot; i <= top; i++) {
                 line = lines[i]
                 if (ustrtrim(line) == "") line = "{\smallskip}"
@@ -955,8 +899,7 @@ string scalar findFile(string scalar name) {
         folder = "."
         if(findfile(name, "./") == "") {
                 folder = getFolder(findfile("markstat.ado"))
-                if (c("os") == "Windows") folder = usubinstr(folder, "\", "/", 
-> .)
+                if (c("os") == "Windows") folder = usubinstr(folder, "\", "/", .)
                 else if(usubstr(folder, 1, 1) == "~") {
                         wd = pwd()
                         chdir("")
