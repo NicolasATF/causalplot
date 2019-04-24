@@ -1,5 +1,5 @@
 
-program define markstat
+program define markstat1
 version 14
 *! v 2.3 <grodri@princeton.edu> 26oct2016 rev 2apr2019
         capture noisily _markstat `0'
