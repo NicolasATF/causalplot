@@ -1,12 +1,4 @@
-
-program define markstat1
-version 14
-*! v 2.3 <grodri@princeton.edu> 26oct2016 rev 2apr2019
-        capture noisily _markstat `0'
-        if _rc > 0 _closeAllFiles
-end
-
-program _markstat1
+program markstat1
         syntax using/ [, pdf docx slides SLIDES2(string) beamer BEAMER2(string) ///
                          markdown mathjax bundle BIBliography strict ///
                                  noDO noR keep KEEP2(string) plain ]
