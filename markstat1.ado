@@ -6,7 +6,7 @@ version 14
         if _rc > 0 _closeAllFiles
 end
 
-program _markstat
+program _markstat1
         syntax using/ [, pdf docx slides SLIDES2(string) beamer BEAMER2(string) ///
                          markdown mathjax bundle BIBliography strict ///
                                  noDO noR keep KEEP2(string) plain ]
