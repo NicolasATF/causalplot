@@ -41,5 +41,5 @@ kplot1 `obs' `cal' , tipo(rd)
 markstat using diap_rd.stmd,slides(santiago) 
 }
 }
-}
+
 end
