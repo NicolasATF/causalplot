@@ -1,13 +1,7 @@
 program causalplot
-syntax anything [,TIPO(string) LINK(string) ]
+syntax anything [,TIPO(string) ]
 
 local dir `c(pwd')
-if ("`link'"==""){
-error, link need it
-}
-else {
-local l "`link'"
-cd `dir'
 
 local obs `1'
 local cal `2'
@@ -17,7 +11,7 @@ qui{
 
 kplot1 `obs' , tipo(omitida)
 
-markstat1 using diap_omitida.stmd,slides(santiago) 
+markstat using diap_omitida.stmd,slides(santiago) 
 }
 }
 
@@ -26,7 +20,7 @@ qui{
 
 kplot1 `obs' `cal' , tipo(psm)
 
-markstat1 using diap_psm.stmd,slides(santiago)
+markstat using diap_psm.stmd,slides(santiago)
 }
 }
 
@@ -35,7 +29,7 @@ qui{
 
 kplot1 `obs' , tipo(dd)
 
-markstat1 using diap_dd.stmd,slides(santiago)
+markstat using diap_dd.stmd,slides(santiago)
 }
 }
 
@@ -44,7 +38,7 @@ qui{
 
 kplot1 `obs' `cal' , tipo(rd)
 
-markstat1 using diap_rd.stmd,slides(santiago) 
+markstat using diap_rd.stmd,slides(santiago) 
 }
 }
 }
