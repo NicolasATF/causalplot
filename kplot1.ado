@@ -138,10 +138,9 @@ twoway (scatter y x if u == 1, msize(vsmall)  yline(`m1' , lcolor(black))) ///
  graph export correlation4.png,as(png) replace
 
  twoway   (line my x if u == 1, msize(vsmall) lcolor(navy)) ///
- (line my x if u == 0, msize(vsmall) lcolor(maroon)) ///
- , graphregion(fcolor(white)) ///
- legend(off) ///
- title("El ATE es" "E(Y|D=1) - E(Y|D=0)")
+ (line my x if u == 0, msize(vsmall) lcolor(maroon)) , ///
+ graphregion(fcolor(white)) ///
+ legend(off)  title("El ATE es" "E(Y|D=1) - E(Y|D=0)") 
  graph export correlation5.png,as(png) replace
 
 drop *
